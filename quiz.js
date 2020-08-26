@@ -9,6 +9,8 @@ var start=document.getElementById("start"),
 	prev=document.getElementById("prev"),
 	//Next Button
 	next=document.getElementById("next"),
+	panel=document.getElementById("panel"),
+	gameScore=document.getElementById("score"),
 	//Which question number
     qNo=0,
     score=0,
@@ -34,6 +36,19 @@ start.addEventListener('click',()=>{
 	displayQuestion(questions[qNo]);
 })
 function displayQuestion(question){
+	if(qNo==questions.length-1){
+		next.classList.toggle('hide')
+	}
+	else{
+		next.classList.remove('hide');
+	}
+	if(qNo==0){
+	prev.classList.toggle('hide')
+	}
+	else{
+		prev.classList.remove('hide');
+	}
+
 //Setting options to be 0
 answers.innerHTML="";
 //Question status
@@ -57,21 +72,30 @@ question.options.forEach((option)=>{
 		button.dataset.value="true";
 		if(status==1){
 			button.style.backgroundColor="green";
+			button.style.cursor="not-allowed";
+		}
+		else{
+			button.addEventListener('click',checkAnswer)
 		}
 	}
 	else{
 		button.dataset.value="false";
 		if(status==1){
 			button.style.backgroundColor="red";
+			button.style.cursor="not-allowed";
+		}
+		else{
+			button.addEventListener('click',checkAnswer);
 		}
 	}
-	button.addEventListener('click',checkAnswer)
+	
 	answers.appendChild(button);
 
 })
 choices=document.querySelectorAll(".choice");
 }
 function checkAnswer(e){
+	console.log("clicked");
 	questions[qNo].status=1;
 	var opted=e.target;
 	if(opted.getAttribute("data-value")=="true"){
@@ -79,39 +103,84 @@ function checkAnswer(e){
 	}
 		choices.forEach((choice)=>{
 			var value=choice.getAttribute("data-value")
-			console.log(value)
 			if(value=="true"){
 				choice.style.backgroundColor="green";
+				choice.style.cursor="not-allowed";
+				choice.removeEventListener('click',checkAnswer);
 			}
 			else{
 				choice.style.backgroundColor="red";
+				choice.style.cursor="not-allowed";
+				choice.removeEventListener('click',checkAnswer);
 			}
 		})
 
+	completionCheck();
 	}
 
+function completionCheck(){
+	var flag=0;
+	for(var l=0;l<questions.length;l++){
+		if(questions[l].status==0){
+			flag=1;
+		}
+	}
+	if(flag==0){
+		setTimeout(function(){
+			entireQue.classList.add("hide");
+		prev.classList.add("hide");
+		next.classList.add("hide");
+		gameScore.classList.remove('hide');
+		gameScore.textContent="Your Score is: "+score;
+	},800)
+		
+	}
+}
 
 var questions=[{
-	query:"How to greet people",
+	query:"How many countries, areas or territories are suffering from novel coronavirus outbreak in the World?",
 	options:[
-	{value:'hi',isTrue: true},
-	{value:'bye',isTrue: false},
-	{value:'poda',isTrue: false},
-	{value:'va',isTrue: false}],
+	{value:'More than 50',isTrue: false},
+	{value:'More than 100',isTrue: false},
+	{value:'More than 150',isTrue: false},
+	{value:'More than 200',isTrue: true}],
 	status:0,
 	seen:0,
-	img:"boy.jpg"
+	img:""
 },
 {
-	query:"How are you?",
+	query:"Thailand announced that it has proceeded to test its novel coronavirus vaccine on which animal/bird?",
 	options:[
-	{value:'ok',isTrue: true},
-	{value:'bad',isTrue: false},
-	{value:'poda',isTrue: false},
-	{value:'va',isTrue: false}],
+	{value:'Monkeys',isTrue: true},
+	{value:'Lizards',isTrue: false},
+	{value:'Hens',isTrue: false},
+	{value:'Kites',isTrue: false}],
+	status:0,
+	seen:0,
+	img:""
+},
+{
+	query:" Mild Symptoms of Novel coronavirus are:",
+	options:[
+	{value:'Fever',isTrue: false},
+	{value:'Cough',isTrue: false},
+	{value:'Shortness of breath',isTrue: false},
+	{value:'All the above',isTrue: true}],
+	status:0,
+	seen:0,
+	img:""
+},
+{
+	query:"From where coronavirus got its name?",
+	options:[
+	{value:'Due to their crown-like projections.',isTrue: true},
+	{value:'Due to their leaf-like projections.',isTrue: false},
+	{value:'Due to their surface structure of bricks.',isTrue: false},
+	{value:'None of the above',isTrue: false}],
 	status:0,
 	seen:0,
 	img:""
 }
+
 	]
 

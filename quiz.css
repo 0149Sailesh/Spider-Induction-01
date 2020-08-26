@@ -1,5 +1,9 @@
 *{
 	box-sizing: border-box;
+	font-family: Verdana;
+		font-size: 20px;
+
+	color:white;
 }
 
 body{
@@ -8,6 +12,8 @@ body{
 	width:100vw;
 	justify-content: center;
 	align-items: center;
+	background-image: url("https://img.freepik.com/free-photo/dark-blue-texture-cement-wall-background_28629-1627.jpg?size=626&ext=jpg");
+
 
 }
 .container{
@@ -17,6 +23,8 @@ body{
 	width:500px;
 	max-width: 80%;
 	background-color:#C0C0C0;
+	 box-shadow: 10px 10px 5px grey;
+background-image: url("https://img.freepik.com/free-photo/dark-blue-texture-cement-wall-background_28629-1627.jpg?size=626&ext=jpg");
 	}
 
 
@@ -33,7 +41,7 @@ body{
 	background-color:black ;
 	 color:white;
 	 border: 1px solid white;
-	 border-radius:5px;
+	 border-radius:10px;
 	 cursor:pointer;
 	}
 #panel{
@@ -66,4 +74,11 @@ button{
 }
 button{
 	min-height:30px;
+}
+#start{
+	transform: translateX(120px);
+	height: 50px
+}
+#score{
+	transform: translateX(150px);
 }
