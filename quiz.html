@@ -5,7 +5,19 @@
 	<link rel="stylesheet" type="text/css" href="quiz.css">
 </head>
 <body>
-	
+	<div class="hide" id="side-nav">
+		<div onclick="navigate(0)" class="nav-elem">1</div>
+		<div onclick="navigate(1)" class="nav-elem">2</div>
+		<div onclick="navigate(2)" class="nav-elem">3</div>
+		<div onclick="navigate(3)" class="nav-elem">4</div>
+		<div onclick="navigate(4)" class="nav-elem">5</div>
+		<div onclick="navigate(5)" class="nav-elem">6</div>
+		<div onclick="navigate(6)" class="nav-elem">7</div>
+		<div onclick="navigate(7)" class="nav-elem">8</div>
+		<div onclick="navigate(8)" class="nav-elem">9</div>
+		<div onclick="navigate(9)" class="nav-elem">10</div>
+		<div onclick="navigate(10)" class="nav-elem">11</div>
+	</div>
 		<div class="container">
 		<div id="score" class="blinking"></div>
 		<div id="question" class="hide">
@@ -19,6 +31,10 @@
 		</div>
 			<div id="panel">
 				<button id="prev" class="hide">Previous</button>
+				<div class="textbox">
+    				<i class="fas fa-user"></i>
+    					<input type="text" placeholder="Username" name="username">
+  				</div>
 				<button id="start">Start</button>
 				<button id="next" class="hide">Next</button>
 			</div>

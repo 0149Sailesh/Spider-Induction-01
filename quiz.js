@@ -1,3 +1,4 @@
+	//Start Button variable
 var start=document.getElementById("start"),
 	//Question along with answers asked
 	entireQue=document.getElementById("question"),
@@ -9,15 +10,25 @@ var start=document.getElementById("start"),
 	prev=document.getElementById("prev"),
 	//Next Button
 	next=document.getElementById("next"),
+	//Prev Next Start Panel
 	panel=document.getElementById("panel"),
+	//Score DOM variable
 	gameScore=document.getElementById("score"),
+	//Sid nav container variable
+	side_nav=document.getElementById("side-nav"),
 	//Which question number
     qNo=0,
+    //Final Score
     score=0,
+    //Options variable
+    choices=document.querySelector(".choice"),
+    //correct memes
+    correct=document.getElementById("correct"),
+    //Wrong memes
+    wrong=document.getElementById("wrong"),
+    //Nav Elements
+    elems=document.querySelectorAll(".nav-elem");
 
-     choices=document.querySelector(".choice"),
-     correct=document.getElementById("correct"),
-     wrong=document.getElementById("wrong");
 
 
 
@@ -39,20 +50,19 @@ prev.addEventListener('click',()=>{
 })
 start.addEventListener('click',()=>{
 	entireQue.classList.remove("hide");
-	prev.classList.remove("hide");
-	next.classList.remove("hide");
 	start.classList.add("hide");
+	side_nav.classList.remove("hide");
 	displayQuestion(questions[qNo]);
 })
 function displayQuestion(question){
 	if(qNo==questions.length-1){
-		next.classList.toggle('hide')
+		next.classList.add('hide')
 	}
 	else{
 		next.classList.remove('hide');
 	}
 	if(qNo==0){
-	prev.classList.toggle('hide')
+	prev.classList.add('hide')
 	}
 	else{
 		prev.classList.remove('hide');
@@ -62,6 +72,8 @@ function displayQuestion(question){
 answers.innerHTML="";
 //Question status
 var status=question.status;
+//If asnwered correctly or not
+var right=question.right;
 //Setting question
 var img='';
 if(question.img!==""){
@@ -69,7 +81,15 @@ if(question.img!==""){
 }
 
 asked.innerHTML='<p>'+question.query+'</p>'+img;
-
+if(right===1){
+	elems[qNo].style.backgroundColor="green";
+}
+else if(right===0){
+	elems[qNo].style.backgroundColor="red";
+}
+else{
+	elems[qNo].style.backgroundColor="orange";
+}
 
 
 //Creating options
@@ -109,7 +129,13 @@ function checkAnswer(e){
 	questions[qNo].status=1;
 	var opted=e.target;
 	if(opted.getAttribute("data-value")=="true"){
+		//Incrementing score
 		score+=1;
+		//Setting right variable to 1
+		questions[qNo].right=1;
+		//Setting side elem to green
+		elems[qNo].style.backgroundColor="green";
+		//For meme
 		let foo = Math.floor(Math.random() * 3);
 		correct.setAttribute("src",correctImg[foo]);
 		correct.style.height=container[0].offsetHeight+"px";
@@ -123,7 +149,9 @@ function checkAnswer(e){
 		
 	}
 	else{
+		questions[qNo].right=0;
 		let foo = Math.floor(Math.random() * 3);
+		elems[qNo].style.backgroundColor="red";
 		wrong.setAttribute("src",wrongImg[foo]);
 		wrong.style.height=container[0].offsetHeight+"px";
 		wrong.style.left=container[0].offsetLeft+"px";
@@ -167,12 +195,17 @@ function completionCheck(){
 		setTimeout(function(){
 			entireQue.classList.add("hide");
 		prev.classList.add("hide");
+		side_nav.classList.add("hide");
 		next.classList.add("hide");
 		gameScore.classList.remove('hide');
 		gameScore.textContent="Your Score is: "+score;
 	},800)
 		
 	}
+}
+function navigate(val){
+	qNo=val;
+	displayQuestion(questions[qNo]);
 }
 
 var questions=[{
@@ -184,7 +217,8 @@ var questions=[{
 	{value:'Only A is correct.',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 
 	{query:"How many countries, areas or territories are suffering from novel coronavirus outbreak in the World?",
@@ -195,7 +229,8 @@ var questions=[{
 	{value:'More than 200',isTrue: true}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:"Thailand announced that it has proceeded to test its novel coronavirus vaccine on which animal/bird?",
@@ -206,7 +241,8 @@ var questions=[{
 	{value:'Kites',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:" Mild Symptoms of Novel coronavirus are:",
@@ -217,7 +253,8 @@ var questions=[{
 	{value:'All the above',isTrue: true}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:"From where coronavirus got its name?",
@@ -228,7 +265,8 @@ var questions=[{
 	{value:'None of the above',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:" Name a clinical trial in which blood is transfused from recovered COVID-19 patients to a coronavirus patient who is in critical condition?",
@@ -239,7 +277,8 @@ var questions=[{
 	{value:'Hydroxychloroquine',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:" Which of the following diseases are related to coronavirus?",
@@ -250,7 +289,8 @@ var questions=[{
 	{value:'Neither A nor B',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 
 {
@@ -262,7 +302,8 @@ var questions=[{
 	{value:'Tianjin',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:"In a study, which cells are found in COVID-19 patients 'bode well' for long term immunity?",
@@ -273,7 +314,8 @@ var questions=[{
 	{value:'Endothelial Cells',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:" Name the vaccine that is jointly developed by the German company BioNTech and US pharma giant Pfizer for COVID-19?",
@@ -284,7 +326,8 @@ var questions=[{
 	{value:'Neither A nor B',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 },
 {
 	query:"What are the precautions that need to be taken to protect from the coronavirus?",
@@ -295,7 +338,8 @@ var questions=[{
 	{value:'Wash your hands after every hour.',isTrue: false}],
 	status:0,
 	seen:0,
-	img:""
+	img:"",
+	right:5
 }
 
 	]
