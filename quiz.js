@@ -16,6 +16,8 @@ var start=document.getElementById("start"),
 	gameScore=document.getElementById("score"),
 	//Sid nav container variable
 	side_nav=document.getElementById("side-nav"),
+	username=document.getElementById("username"),
+	textbox=document.querySelectorAll(".textbox"),
 	//Which question number
     qNo=0,
     //Final Score
@@ -28,9 +30,8 @@ var start=document.getElementById("start"),
     wrong=document.getElementById("wrong"),
     //Nav Elements
     elems=document.querySelectorAll(".nav-elem");
-
-
-
+    //Current playerName
+    var player;
 
 
 var container=document.querySelectorAll(".container");
@@ -49,7 +50,17 @@ prev.addEventListener('click',()=>{
 	displayQuestion(questions[qNo]);
 })
 start.addEventListener('click',()=>{
+	console.log(username.value);
+	if(username.value==""){
+		player="Anonymous";
+	}
+	else{
+		player=username.value;
+		console.log(player);
+	}
+	questions.sort(() => Math.random() - 0.5);
 	entireQue.classList.remove("hide");
+	textbox[0].classList.add("hide");
 	start.classList.add("hide");
 	side_nav.classList.remove("hide");
 	displayQuestion(questions[qNo]);
@@ -198,7 +209,7 @@ function completionCheck(){
 		side_nav.classList.add("hide");
 		next.classList.add("hide");
 		gameScore.classList.remove('hide');
-		gameScore.textContent="Your Score is: "+score;
+		gameScore.textContent=player+", your Score is: "+score;
 	},800)
 		
 	}
@@ -229,8 +240,7 @@ var questions=[{
 	{value:'More than 200',isTrue: true}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:"Thailand announced that it has proceeded to test its novel coronavirus vaccine on which animal/bird?",
@@ -241,8 +251,7 @@ var questions=[{
 	{value:'Kites',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:" Mild Symptoms of Novel coronavirus are:",
@@ -253,8 +262,7 @@ var questions=[{
 	{value:'All the above',isTrue: true}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:"From where coronavirus got its name?",
@@ -265,8 +273,7 @@ var questions=[{
 	{value:'None of the above',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:" Name a clinical trial in which blood is transfused from recovered COVID-19 patients to a coronavirus patient who is in critical condition?",
@@ -277,8 +284,7 @@ var questions=[{
 	{value:'Hydroxychloroquine',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:" Which of the following diseases are related to coronavirus?",
@@ -289,8 +295,7 @@ var questions=[{
 	{value:'Neither A nor B',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 
 {
@@ -302,8 +307,7 @@ var questions=[{
 	{value:'Tianjin',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:"In a study, which cells are found in COVID-19 patients 'bode well' for long term immunity?",
@@ -314,8 +318,7 @@ var questions=[{
 	{value:'Endothelial Cells',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:" Name the vaccine that is jointly developed by the German company BioNTech and US pharma giant Pfizer for COVID-19?",
@@ -326,8 +329,7 @@ var questions=[{
 	{value:'Neither A nor B',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 },
 {
 	query:"What are the precautions that need to be taken to protect from the coronavirus?",
@@ -338,8 +340,7 @@ var questions=[{
 	{value:'Wash your hands after every hour.',isTrue: false}],
 	status:0,
 	seen:0,
-	img:"",
-	right:5
+	img:""
 }
 
 	]
