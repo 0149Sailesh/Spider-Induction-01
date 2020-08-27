@@ -1,3 +1,16 @@
+	if (localStorage.getItem("hasCodeRunBefore") === null) {
+		var person={
+			name:"Hello",
+			date:"2020/08/27",
+			time:"20:12",
+			score:-1
+
+		}
+        localStorage.setItem('highScore',JSON.stringify(person));
+        localStorage.setItem("hasCodeRunBefore", true);
+    }
+
+
 	//Start Button variable
 var start=document.getElementById("start"),
 	//Question along with answers asked
@@ -35,6 +48,7 @@ var start=document.getElementById("start"),
 
 
 var container=document.querySelectorAll(".container");
+var container2=document.querySelectorAll(".container2");
 console.log(container[0].offsetTop);
 
 var correctImg=["correct.jpg","correct1.jpg","correct2.png"];
@@ -203,13 +217,30 @@ function completionCheck(){
 		}
 	}
 	if(flag==0){
+		var person=JSON.parse(localStorage.getItem("highScore"));
+		var today= new Date();
+		var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+		var time = today.toLocaleTimeString();
+		if(score>=person.score){
+			var newP={
+				name:player,
+				date:date,
+				time:time,
+				score:score
+
+			}
+			localStorage.setItem("highScore",JSON.stringify(newP));
+		}
 		setTimeout(function(){
 			entireQue.classList.add("hide");
 		prev.classList.add("hide");
 		side_nav.classList.add("hide");
 		next.classList.add("hide");
 		gameScore.classList.remove('hide');
-		gameScore.textContent=player+", your Score is: "+score;
+		var high=JSON.parse(localStorage.getItem("highScore"));
+		gameScore.innerHTML=player+', your Score is: '+score;
+		container2[0].classList.remove("hide");
+		container2[0].innerHTML='<div class="font"><p style="font-family: Arial;font-size: 25px;color: gold;"">High Score Details</p><ul><li>Name: '+high.name+'</li><li>Score: '+high.score+'</li><li>Date: '+high.date+'</li><li>Time: '+high.time+'</li></ul></div>'	
 	},800)
 		
 	}
@@ -342,5 +373,7 @@ var questions=[{
 	seen:0,
 	img:""
 }
+
+	
 
 	]
