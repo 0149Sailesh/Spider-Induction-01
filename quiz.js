@@ -9,7 +9,8 @@
         localStorage.setItem('highScore',JSON.stringify(person));
         localStorage.setItem("hasCodeRunBefore", true);
     }
-
+    var timer=15;
+    
 
 	//Start Button variable
 var start=document.getElementById("start"),
@@ -41,10 +42,14 @@ var start=document.getElementById("start"),
     correct=document.getElementById("correct"),
     //Wrong memes
     wrong=document.getElementById("wrong"),
+    //timer variable
+    timerVis=document.getElementById("timer"),
     //Nav Elements
     elems=document.querySelectorAll(".nav-elem");
     //Current playerName
     var player;
+    //Clearing timer interval
+    var a;
 
 
 var container=document.querySelectorAll(".container");
@@ -54,7 +59,44 @@ console.log(container[0].offsetTop);
 var correctImg=["correct.jpg","correct1.jpg","correct2.png"];
 var wrongImg=["wrong.png","wrong1.jpg","wrong2.jpg"];
 
+function check(){
+	if(timer<=0){
+		var person=JSON.parse(localStorage.getItem("highScore"));
+		var today= new Date();
+		var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+		var time = today.toLocaleTimeString();
+		if(score>=person.score){
+			var newP={
+				name:player,
+				date:date,
+				time:time,
+				score:score
 
+			}
+			
+			localStorage.setItem("highScore",JSON.stringify(newP));
+			
+	}
+	setTimeout(function(){
+		entireQue.classList.add("hide");
+		prev.classList.add("hide");
+		side_nav.classList.add("hide");
+		next.classList.add("hide");
+		gameScore.classList.remove('hide');
+		var high=JSON.parse(localStorage.getItem("highScore"));
+		gameScore.innerHTML=player+', your Score is: '+score;
+		container2[0].classList.remove("hide");
+		container2[0].innerHTML='<div class="font"><p style="font-family: Arial;font-size: 25px;color: gold;"">High Score Details</p><ul><li>Name: '+high.name+'</li><li>Score: '+high.score+'</li><li>Date: '+high.date+'</li><li>Time: '+high.time+'</li></ul></div>';
+		timerVis.classList.add("hide");
+	},800)
+	clearInterval(a);
+}
+if(timer<10){
+				
+				timerVis.classList.add("blinkingR");
+			}
+	
+}
 next.addEventListener('click',()=>{
 	qNo+=1;
 	displayQuestion(questions[qNo]);
@@ -63,8 +105,23 @@ prev.addEventListener('click',()=>{
 	qNo-=1;
 	displayQuestion(questions[qNo]);
 })
+
+
 start.addEventListener('click',()=>{
 	console.log(username.value);
+	 a=setInterval(function(){
+    	timer--;
+    	var minutes = Math.floor(timer/ 60);
+    	var seconds = timer - minutes * 60;
+    	if(seconds<10){
+    		timerVis.textContent=minutes+":0"+seconds;
+    	}else{
+    		timerVis.textContent=minutes+":"+seconds;
+    	}
+    	
+    	console.log(timer);
+    	check();
+    },1000)
 	if(username.value==""){
 		player="Anonymous";
 	}
@@ -161,6 +218,7 @@ function checkAnswer(e){
 		//Setting side elem to green
 		elems[qNo].style.backgroundColor="green";
 		//For meme
+		correct.setAttribute("src","");
 		let foo = Math.floor(Math.random() * 3);
 		correct.setAttribute("src",correctImg[foo]);
 		correct.style.height=container[0].offsetHeight+"px";
