@@ -9,7 +9,7 @@
         localStorage.setItem('highScore',JSON.stringify(person));
         localStorage.setItem("hasCodeRunBefore", true);
     }
-    var timer=15;
+    var timer=240;
     
 
 	//Start Button variable
@@ -50,6 +50,10 @@ var start=document.getElementById("start"),
     var player;
     //Clearing timer interval
     var a;
+    //Correct song
+    var correctSong=document.querySelectorAll(".correctSong");
+    //Wrong song
+    var wrongSong=document.querySelectorAll(".wrongSong");
 
 
 var container=document.querySelectorAll(".container");
@@ -226,6 +230,10 @@ function checkAnswer(e){
 		correct.style.top=container[0].offsetTop+"px";
 		correct.style.width=container[0].offsetWidth+"px";
 		correct.classList.toggle("hide");
+
+		correctSong[0].play();
+
+
 		setTimeout(function(){
 					correct.classList.add("hide");
 				},3000)
@@ -241,6 +249,7 @@ function checkAnswer(e){
 		wrong.style.top=container[0].offsetTop+"px";
 		wrong.style.width=container[0].offsetWidth+"px";
 		wrong.classList.toggle("hide");
+		wrongSong[0].play();
 		setTimeout(function(){
 					wrong.classList.add("hide");
 				},3000)
